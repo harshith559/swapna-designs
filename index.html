@@ -43,8 +43,9 @@ input[type=checkbox]{width:auto;}
 .navlink{position:relative;padding-bottom:3px;}
 .navlink::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .25s;}
 .navlink:hover::after{transform:scaleX(1);}
-.hero-bg{background:radial-gradient(ellipse 700px 500px at 75% 15%,rgba(214,54,43,.12),transparent 50%),radial-gradient(ellipse 600px 450px at 20% 80%,rgba(46,94,173,.1),transparent 55%),linear-gradient(135deg,#FBF6EC,#F5E6D3 30%,#EFD6C1 60%,#F0E4CC);}
+.hero-bg{background:linear-gradient(135deg,#FBF6EC,#F3EBDA);}
 .qty-btn{width:28px;height:28px;border:1px solid var(--line);border-radius:3px;display:flex;align-items:center;justify-content:center;}
+.menu-mobile{display:none;font-size:22px;padding:4px 8px;}
 .grid{align-items:start;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
 .sec{padding:40px 24px 8px;}
@@ -54,6 +55,9 @@ input[type=checkbox]{width:auto;}
   .container{padding:0 16px;}
   .two{grid-template-columns:1fr;gap:24px;}
   .nav-desktop,.search-desktop{display:none!important;}
+  .menu-mobile{display:block;}
+  #prodForm{grid-template-columns:1fr!important;}
+  #prodForm>*{grid-column:1/-1!important;}
   .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
   .btn{padding:10px 16px;font-size:12px;}
   .btn-sm{padding:7px 12px;font-size:11px;}
@@ -86,6 +90,7 @@ input[type=checkbox]{width:auto;}
 
 <header style="position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:rgba(251,246,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px;">
+    <button class="menu-mobile" onclick="toggleMainMenu()" aria-label="Menu">☰</button>
     <a href="#/home" class="serif" style="font-size:26px;white-space:nowrap;">Swapna Designs</a>
     <nav style="display:flex;gap:28px;font-size:14px;" class="nav-desktop">
       <a href="#/home" class="navlink">Home</a><a href="#/shop" class="navlink">Shop</a>
@@ -116,7 +121,7 @@ input[type=checkbox]{width:auto;}
   <div id="wishItems" style="flex:1;overflow-y:auto;padding:18px 24px;"></div></div></aside>
 
 <aside id="categoryDrawer" class="drawer"><div style="display:flex;flex-direction:column;height:100%;">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line);"><h3 class="serif" style="margin:0;font-size:22px;">Browse Categories</h3><button onclick="closeAllDrawers()" style="font-size:20px;">✕</button></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line);"><h3 id="catDrawerTitle" class="serif" style="margin:0;font-size:22px;">Browse Categories</h3><button onclick="closeAllDrawers()" style="font-size:20px;">✕</button></div>
   <div id="catDrawerList" style="flex:1;overflow-y:auto;padding:18px 24px;display:grid;gap:10px;align-content:start;"></div></div></aside>
 
 <footer style="background:linear-gradient(135deg,#2E2018,#3A2A1F 50%,#252318);color:var(--cream2);margin-top:60px;">
@@ -331,7 +336,16 @@ function renderWishDrawer(){
 function openDrawer(id){closeAllDrawers();document.getElementById(id).classList.add('open');document.getElementById('scrim').classList.add('open');}
 function toggleCartDrawer(){renderCartDrawer();openDrawer('cartDrawer');}
 function toggleWishlistDrawer(){renderWishDrawer();openDrawer('wishDrawer');}
+function toggleMainMenu(){
+  const a='class="btn btn-line" onclick="closeAllDrawers()" style="text-align:left;width:100%;justify-content:flex-start;"';
+  document.getElementById('catDrawerTitle').textContent='Menu';
+  document.getElementById('catDrawerList').innerHTML=
+    `<a href="#/home" ${a}>🏠 Home</a><a href="#/shop" ${a}>🛍️ Shop</a><a href="#/shop?featured=1" ${a}>⭐ Featured</a><a href="#/about" ${a}>ℹ️ About</a><a href="#/account" ${a}>📦 My Orders</a>
+     <div class="divider" style="margin:10px 0;"></div><a href="#/admin" class="btn btn-gold" onclick="closeAllDrawers()" style="width:100%;">➕ Studio Admin — Add Designs</a>`;
+  openDrawer('categoryDrawer');
+}
 function toggleCategoryMenu(){
+  document.getElementById('catDrawerTitle').textContent='Browse Categories';
   const a='class="btn btn-line" onclick="closeAllDrawers()" style="text-align:left;width:100%;justify-content:flex-start;';
   document.getElementById('catDrawerList').innerHTML=
     `<a href="#/shop" ${a}">🛍️ All Designs</a>`+
@@ -413,14 +427,7 @@ function viewHome(){
     </div>
   </section>
 
-  <section class="container sec"><h2 class="serif">Featured Designs Collection</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:30px;">
-    ${feat.map((p,i)=>{const bg=colors[i%colors.length];return `<a href="#/product/${p.id}" style="display:block;">
-      <div style="background:linear-gradient(135deg,${bg},${bg}dd);border-radius:8px;padding:24px 16px;color:#fff;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 4px 12px rgba(0,0,0,.1);">
-        <div><div style="font-size:12px;opacity:.9;margin-bottom:8px;">${p.cat}</div><h3 class="serif" style="font-size:18px;margin:0 0 12px;line-height:1.3;">${p.name}</h3><div style="font-size:13px;opacity:.85;">${p.desc.substring(0,50)}…</div></div>
-        <div><div style="font-size:20px;font-weight:600;margin:10px 0 4px;">${fmt(price(p))}</div><div style="font-size:12px;opacity:.8;">★★★★★ (${p.rating})</div>
-        <div style="background:#fff;color:${bg};padding:10px 16px;border-radius:4px;font-size:12px;font-weight:600;margin-top:12px;text-align:center;">View Design</div></div>
-      </div></a>`;}).join('')}</div></section>
+  <section class="container sec"><div class="head"><h2 class="serif" style="margin:0;">Featured Designs</h2><a href="#/shop?featured=1" style="font-size:13px;border-bottom:1px solid var(--ink);">View all</a></div><div class="grid">${feat.map(productCard).join('')}</div></section>
 
   <section class="container sec"><div class="head"><h2 class="serif" style="margin:0;">New Arrivals</h2><a href="#/shop?sort=newest" style="font-size:13px;border-bottom:1px solid var(--ink);">View all</a></div>
     <div class="grid">${news.map(productCard).join('')}</div></section>
@@ -438,9 +445,9 @@ function viewHome(){
       </div></div></section>
 
   <section class="container" style="padding:40px 24px;">
-    <div style="background:linear-gradient(135deg,#2E5EAD,#6B3FA0 35%,#E63366 70%,#FF8C42);color:#fff;border-radius:10px;padding:clamp(24px,5vw,44px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <div style="background:var(--ink);color:#fff;border-radius:10px;padding:clamp(24px,5vw,44px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
       <div><div style="font-size:12px;letter-spacing:.08em;color:#FFE5B4;margin-bottom:8px;">✨ SPECIAL OFFER</div><h2 class="serif" style="font-size:28px;margin:0 0 6px;">20% off select bridal &amp; saree sets</h2><p style="margin:0;color:#F0E4CC;font-size:14px;">Limited designs, while digitizing slots last.</p></div>
-      <a href="#/shop?sale=1" class="btn" style="background:#fff;color:#2E5EAD;font-weight:600;">Shop the Sale</a></div>
+      <a href="#/shop?sale=1" class="btn" style="background:#fff;color:var(--ink);font-weight:600;">Shop the Sale</a></div>
     ${sale.length?`<div class="grid" style="margin-top:28px;">${sale.map(productCard).join('')}</div>`:''}
   </section>
 
@@ -603,7 +610,7 @@ function viewAbout(){
         <img src="${MLA_PHOTO}" alt="Vemulawada MLA Aadi Srinivas visiting Swapna Embroidery Designs" style="width:100%;height:auto;display:block;" onerror="document.getElementById('mlaBlock').style.display='none'">
         <div style="padding:16px 20px;font-size:14px;color:var(--ink2);line-height:1.6;">Honoured by the visit of Vemulawada MLA Sri Aadi Srinivas to our shop in Bommena.</div></div></div>
 
-    <div style="background:linear-gradient(135deg,#2E5EAD,#6B3FA0 35%,#E63366 70%,#FF8C42);color:#fff;border-radius:10px;padding:40px;margin-bottom:60px;">
+    <div style="background:var(--ink);color:#fff;border-radius:10px;padding:40px;margin-bottom:60px;">
       <h2 class="serif" style="font-size:26px;margin-bottom:20px;">What We Offer</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;font-size:14px;">
         <div>✓ Hand-digitized embroidery designs</div><div>✓ Machine-tested &amp; scalable</div><div>✓ Instant downloads in all formats</div><div>✓ Custom design consultations</div><div>✓ Bridal, saree &amp; kurti collections</div><div>✓ Support for all embroidery formats</div></div></div>
