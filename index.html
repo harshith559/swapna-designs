@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Swapna Embroidery Designs — Premium Embroidery Files</title>
+<meta name="description" content="Hand-digitized embroidery designs for blouse, neck, saree, bridal and kurti. Order on WhatsApp.">
+<meta property="og:title" content="Swapna Embroidery Designs">
+<meta property="og:description" content="Hand-digitized embroidery designs. Order on WhatsApp.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧵%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -55,7 +59,11 @@ input[type=checkbox]{width:auto;}
   .container{padding:0 16px;}
   .two{grid-template-columns:1fr;gap:24px;}
   .nav-desktop,.search-desktop{display:none!important;}
-  .menu-mobile{display:block;}
+  .menu-mobile{display:block;padding:4px 2px;}
+  .logo{font-size:19px!important;}
+  .cat-btn{padding:5px 8px!important;font-size:11px!important;}
+  header .container{gap:8px!important;}
+  header .container>div:last-child{gap:10px!important;}
   #prodForm{grid-template-columns:1fr!important;}
   #prodForm>*{grid-column:1/-1!important;}
   .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
@@ -91,14 +99,14 @@ input[type=checkbox]{width:auto;}
 <header style="position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:rgba(251,246,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px;">
     <button class="menu-mobile" onclick="toggleMainMenu()" aria-label="Menu">☰</button>
-    <a href="#/home" class="serif" style="font-size:26px;white-space:nowrap;">Swapna Designs</a>
+    <a href="#/home" class="serif logo" style="font-size:26px;white-space:nowrap;">Swapna Designs</a>
     <nav style="display:flex;gap:28px;font-size:14px;" class="nav-desktop">
       <a href="#/home" class="navlink">Home</a><a href="#/shop" class="navlink">Shop</a>
       <a href="#/shop?featured=1" class="navlink">Featured</a><a href="#/about" class="navlink">About</a><a href="#/account" class="navlink">My Orders</a>
       <a href="#/admin" class="navlink">Studio Admin</a>
     </nav>
     <div style="display:flex;align-items:center;gap:14px;">
-      <button onclick="toggleCategoryMenu()" style="padding:6px 14px;background:var(--gold);color:#fff;border-radius:4px;font-weight:500;font-size:13px;">📂 Categories</button>
+      <button class="cat-btn" onclick="toggleCategoryMenu()" style="padding:6px 14px;background:var(--gold);color:#fff;border-radius:4px;font-weight:500;font-size:13px;">📂 Categories</button>
       <div class="search-desktop"><input id="navSearch" placeholder="Search designs…" style="width:180px;padding:9px 12px;font-size:13px;" onkeydown="if(event.key==='Enter')doSearch(this.value)"></div>
       <button onclick="toggleWishlistDrawer()" aria-label="Wishlist" style="position:relative;">♡<span id="wishCount" style="position:absolute;top:-8px;right:-10px;background:var(--maroon);color:#fff;font-size:10px;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;"></span></button>
       <button onclick="toggleCartDrawer()" aria-label="Cart" style="position:relative;">🧺<span id="cartCount" style="position:absolute;top:-8px;right:-10px;background:var(--gold);color:#fff;font-size:10px;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;"></span></button>
